@@ -1,0 +1,1 @@
+<footer><p>MarkLogic Fragment Count Tool - v0.1 - (MMXV)</p></footer>
