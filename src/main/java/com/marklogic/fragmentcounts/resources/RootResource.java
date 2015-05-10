@@ -1,6 +1,7 @@
 package com.marklogic.fragmentcounts.resources;
 
 
+import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
@@ -27,8 +28,9 @@ public class RootResource extends BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RootResource.class);
 
-    private Map<String, Counts> pertainingToDate = new LinkedHashMap<String, Counts>();
-    private Map<String, Map<String, Counts>> allInMap = new LinkedHashMap<String, Map<String, Counts>>();
+    // TODO - unscramble this later...
+    private Map<String, Counts> pertainingToDate;
+
     private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
     /* data model for freemarker .ftl template
     private Map<String, Object> createModel() {
@@ -46,9 +48,9 @@ public class RootResource extends BaseResource {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "Dashboard and Overview");
         map.put("dataSet", FragmentCountMap.getInstance());
-        map.put("allKnownDates", getUniqueDateList());
+        map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("pertainingToDate", pertainingToDate);
-        map.put("allInMap", allInMap);
+        map.put("allInMap", AllInfoMap.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
         //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
         return map;
@@ -69,6 +71,8 @@ public class RootResource extends BaseResource {
         if (FragmentCountMap.getInstance().size() == 0) {
             LOG.info("Fragment Count Map is completely empty - need to reprocess");
             analysePath(Consts.DIRECTORY);
+            getUniqueDateList();
+            getAllInfoMap();
             doRefreshFriendlyWork();
 
         }    else {
@@ -84,34 +88,10 @@ public class RootResource extends BaseResource {
 
     // TODO - method is really nasty but pushed for time before call :/
     public void doRefreshFriendlyWork() {
-
-
-
-        allInMap = new LinkedHashMap<String, Map<String, Counts>>();
-
-        for (String date : UniqueDateList.getInstance()) {
-            // LOG.info("UNIQUE DATE " + s);
-            pertainingToDate = new LinkedHashMap<String, Counts>();
-            for (String s : FragmentCountMap.getInstance().keySet()) {
-                List<Counts> l = FragmentCountMap.getInstance().get(s);
-                for (Counts c : l) {
-                    if (date.equals(c.getDate())) {
-                        if (pertainingToDate.containsKey(s)) {
-                            LOG.info("Key already exists - check this file out " + s);
-                        }
-                        pertainingToDate.put(s, c);
-                    }
-
-                }
-            }
-            allInMap.put(date, pertainingToDate);
-        }
-
-
         /// NExt attempt - get totals as seq
-        for (String s : allInMap.keySet()) {
+        for (String s : AllInfoMap.getInstance().keySet()) {
             // date keys
-            Map<String, Counts> thisDay = allInMap.get(s);
+            Map<String, Counts> thisDay = AllInfoMap.getInstance().get(s);
             // private Map<String, List<String>> accruedTotalsPerForest;
             for (String t : thisDay.keySet()) {
                 // getTotalFragmentsIngestedByForest()

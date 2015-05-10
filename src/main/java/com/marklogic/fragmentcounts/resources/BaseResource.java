@@ -1,6 +1,7 @@
 package com.marklogic.fragmentcounts.resources;
 
 
+import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
@@ -38,11 +39,9 @@ import com.xmlmachines.pstack.util.Utils;
 public class BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseResource.class);
-
+    public List<File> files = new ArrayList<File>();
     @Context
     protected UriInfo uriInfo;
-
-    public List<File> files = new ArrayList<File>();
 
 
 //	public List<PStackFrame> pstacks = PStackMovies.getInstance();
@@ -116,7 +115,6 @@ public class BaseResource {
         return uriInfo.getBaseUriBuilder().path(c).build();
     }
 
-
     /**
      * General handler for exceptions in the request made to the resource This
      * is how you do a custom com.marklogic.analyser.Server Exception with the Freemarker template
@@ -145,10 +143,8 @@ public class BaseResource {
                 .entity(new Viewable(templateName, model)).build();
     }
 
-
-
-    protected Set<String> getUniqueDateList(){
-        if(UniqueDateList.getInstance().isEmpty()){
+    protected Set<String> getUniqueDateList() {
+        if (UniqueDateList.getInstance().isEmpty()) {
             LOG.info("Setting up the unique date list");
             List<String> allDates = new ArrayList<String>();
             for (String s : FragmentCountMap.getInstance().keySet()) {
@@ -177,6 +173,33 @@ public class BaseResource {
         return UniqueDateList.getInstance();
     }
 
+    protected Map<String, Map<String, Counts>> getAllInfoMap() {
+
+        if (AllInfoMap.getInstance().isEmpty()) {
+            Map<String,Map<String,Counts>> tempMap = AllInfoMap.getInstance();
+            LOG.info("Setting up the All Info Map");
+            for (String date : UniqueDateList.getInstance()) {
+                // LOG.info("UNIQUE DATE " + s);
+                Map<String, Counts> pertainingToDate = new LinkedHashMap<String, Counts>();
+                for (String s : FragmentCountMap.getInstance().keySet()) {
+                    List<Counts> l = FragmentCountMap.getInstance().get(s);
+                    for (Counts c : l) {
+                        if (date.equals(c.getDate())) {
+                            if (pertainingToDate.containsKey(s)) {
+                                LOG.info("Key already exists - check this file out " + s);
+                            }
+                            pertainingToDate.put(s, c);
+                        }
+
+                    }
+                }
+                tempMap.put(date, pertainingToDate);
+            }
+            AllInfoMap.setInstance(tempMap);
+        }
+        return AllInfoMap.getInstance();
+    }
+
     protected void analysePath(String path) {
         CsvManager cm = new CsvManager();
 
@@ -190,7 +213,7 @@ public class BaseResource {
             try {
                 cm.processCsvFile(file2);
             } catch (IOException e) {
-              LOG.error("Exception caught "+e.getMessage());
+                LOG.error("Exception caught " + e.getMessage());
             }
 
         }
