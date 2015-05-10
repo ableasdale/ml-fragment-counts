@@ -1,2 +1,8 @@
-#chart {width:5000px; height:1000px; overflow-x: hidden; overflow-x: scroll;}
-#canvas {display: none;}
+#canvas {width:5000px; height:800px; display: none;}
+
+#chart {
+    position: relative;
+    height: 800px;
+    width: 1170px;
+    overflow-x:scroll;
+}

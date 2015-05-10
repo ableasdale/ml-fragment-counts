@@ -11,11 +11,11 @@
         <h3>Current file: <small>TODO</small></h3>
     </div>
 
-    <div class="sixteen columns" id="chart_div" >
+    <div class="sixteen columns">
         <a class="savePNG" href="#">Download PNG</a>
         <div id="chart"></div>
         <img id='img1'/>
-        <canvas id="canvas" width="5000" height="1000"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
 
 
@@ -44,7 +44,7 @@
             bindto: '#chart',
             size: {
                 width: 5000,
-                height: 1000
+                height: 800
             },
             data: {
                 x: 'x',
@@ -80,8 +80,8 @@
             inlineAllStyles();
             // Create PNG image
             var canvas = $('#canvas').empty()[0];
-            canvas.width = $('#chart').width() * 2;
-            canvas.height = $('#chart').height() * 2;
+            canvas.width = $('#canvas').width();
+            canvas.height = $('#canvas').height();
 
             var canvasContext = canvas.getContext('2d');
             var svg = $.trim($('#chart > svg')[0].outerHTML);
