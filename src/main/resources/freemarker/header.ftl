@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MarkLogic ErrorLog Analyser - ${title}</title>
 
-<!-- link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" / -->
 <link rel="stylesheet" type="text/css" href="/vendor/c3.min.css" />
+<link rel="stylesheet" type="text/css" href="/vendor/styles.css" />
 <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
 <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
 <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
@@ -16,8 +16,6 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
@@ -123,149 +121,4 @@
 </script>
 </#if>
 
-<style type="text/css">
-
-    /* expander css*/
-
-    .clickable{
-        cursor: pointer;
-    }
-
-    /* end expander css */
-
-
-    .content a {
-        color: #800000;
-        text-decoration: none;
-    }
-
-    .content a:hover {
-        color: red;
-        text-decoration: none;
-        border-bottom: 1px dotted black;
-    }
-
-    .content a:visited {
-        text-decoration: none;
-        color: #2a5db0;
-        border-bottom: 1px dotted black;
-    }
-
-    .content h2 a:hover, .content h3 a:hover, .content h4 a:hover {
-        text-decoration: none;
-    }
-
-    .pure-menu-selected {
-        border-bottom: 3px solid orange;
-    }
-
-    .term {
-        color: #2a5db0;
-    }
-
-    .highlight {
-        font-weight: bold;
-        background: #ffc;
-    }
-
-        /* Colouring so we can see problems with a particular thread dump from the dashboard view */
-    tr.error {
-        color: red;
-        border-left: 5px solid red;
-    }
-
-        /* Removing the links as the templates for the summaries won't render without data */
-    tr.error td a {
-        display: none;
-    }
-
-
-    .not-useful {
-        border: 1px dashed red;
-    }
-
-    .not-useful h4 {
-        color: #800000;
-        margin-left: 2.5em;
-    }
-
-    .not-useful pre {
-        background: #ffebeb;
-    }
-
-    .useful {
-        border: 1px dashed green;
-    }
-
-    .useful h4 {
-        color: #060;
-        margin-left: 2.5em;
-    }
-
-    .useful pre {
-        background: #e2ffe2;
-    }
-
-    #overview td {
-        text-align: center;
-    }
-
-    .debug, .filename, .sign {
-        color: #800000;
-    }
-
-    .grn {
-        color: #060;
-    }
-
-    #exception {
-        width: 500px;
-        margin: auto;
-        padding: 5em 8em;
-        border: 30px dotted #800000;
-        border-radius: 15em;
-    }
-
-    #chart {
-        position: relative;
-        height: 550px;
-        width: 1100px;
-        overflow-x:scroll;
-    }
-
-    #tooltip {
-        opacity:0.7;
-        font-weight:bold;
-        text-align:center;
-        display:none;
-        width:8.5em;
-        background:black;
-        border-radius: 1em;
-        color:white;
-        padding:0.4em;
-    }
-
-    .bigger {font-size:150%;}
-
-    pre.language-cpp {
-        font-size:95%;
-        overflow-x:scroll;
-    }
-
-    code.language-cpp {
-        max-width: 3000px;
-    }
-
-    #myChart {
-        position: absolute;
-        top: 50px;
-        /* display:none; */
-    }
-
-    .search-result {margin-bottom:2em; background:#eee; border:1px dotted #ddd;}
-    .search-result h4 {margin-left:2em;}
-
-	footer p {text-align:center;}
-
-</style>
 </head>

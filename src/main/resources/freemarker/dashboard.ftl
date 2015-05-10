@@ -11,12 +11,10 @@
         <h3>Current file: <small>TODO</small></h3>
     </div>
 
-
-
-    <div id="chart_div" class="sixteen columns">
-        <a class="savePNG" href="#">download</a>
-        <div id="chart" style="height:1000px;"></div>
-        <img id='img1'>
+    <div class="sixteen columns" id="chart_div" >
+        <a class="savePNG" href="#">Download PNG</a>
+        <div id="chart"></div>
+        <img id='img1'/>
         <canvas id="canvas" width="5000" height="1000"></canvas>
     </div>
 
@@ -29,14 +27,12 @@
     </ul>
 
 
-
 </div>
 <#include "footer.ftl">
 </body>
 </html>
 
 <script>
-
 
     $(function() {
         $('.savePNG').on('click',function(e){
