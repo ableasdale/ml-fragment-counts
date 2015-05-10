@@ -118,13 +118,20 @@ public class RootResource extends BaseResource {
             Map<String,Counts> thisDay = allInMap.get(s);
     // private Map<String, List<String>> accruedTotalsPerForest;
             for (String t : thisDay.keySet()) {
+                // getTotalFragmentsIngestedByForest()
+                // String total = thisDay.get(t).getTotalFragmentsIngestedInDatabase();
+                String total = thisDay.get(t).getTotalFragmentsIngestedByForest();
+                if (total == null || Integer.parseInt(total) < 1){
+                    total = "0";
+                }
+
                 if(accruedTotalsPerForest.containsKey(t)){
                     List<String> totals = accruedTotalsPerForest.get(t);
-                    totals.add(thisDay.get(t).getTotalFragmentsIngestedByForest());
+                    totals.add(total);
                     accruedTotalsPerForest.put(t, totals);
                 } else {
                     List<String> totals = new ArrayList<String>();
-                    totals.add(thisDay.get(t).getTotalFragmentsIngestedByForest());
+                    totals.add(total);
                     accruedTotalsPerForest.put(t, totals);
                 }
 
