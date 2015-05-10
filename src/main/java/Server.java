@@ -4,6 +4,7 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.freemarker.FreemarkerViewProcessor;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.marklogic.fragmentcounts.resources.BaseResource;
@@ -11,6 +12,8 @@ import com.marklogic.fragmentcounts.resources.BaseResource;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +58,7 @@ public class Server {
 
     protected static HttpServer startServer() throws IOException {
         LOG.info("Starting Grizzly (HTTP Service).");
+
         ResourceConfig rc = new PackagesResourceConfig(BaseResource.class
                 .getPackage().getName());
         rc.getProperties().put(
@@ -68,6 +72,17 @@ public class Server {
         params.put("com.sun.jersey.freemarker.templateBasePath",
                 Consts.FREEMARKER_TEMPLATE_PATH);
         rc.setPropertiesAndFeatures(params);
-        return GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
+
+        HttpServer server = GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
+
+        StaticHttpHandler staticHttpHandler = new StaticHttpHandler(Consts.STATIC_RESOURCE_DIRECTORY_ROOT);
+        server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/vendor");
+
+        /*(: server.getServerConfiguration().addHttpHandler(new StaticHttpHandler("/libs"), "/libs");     :)*/
+        /*
+        server.getServerConfiguration().addHttpHandler(
+                new CLStaticHttpHandler(new URLClassLoader(new URL[] {new URL("file:///home/username/staticfiles.jar")})), "/www");
+          */
+        return server;
     }
 }

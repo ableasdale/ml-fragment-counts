@@ -17,7 +17,7 @@
         <a class="savePNG" href="#">download</a>
         <div id="chart" style="height:1000px;"></div>
         <img id='img1'>
-        <canvas id="canvas" width="1000" height="531"></canvas>
+        <canvas id="canvas" width="5000" height="1000"></canvas>
     </div>
 
 
@@ -92,7 +92,7 @@
             canvasContext.drawSvg(svg, 0, 0);
             $(".savePNG").attr("href", canvas.toDataURL("png"))
                     .attr("download", function() {
-                        return "_llamacharts.png";
+                        return "image.png";
                     });
 
         };
@@ -100,7 +100,7 @@
             var chartStyle, selector;
             // Get rules from c3_orig.css
             for (var i = 0; i <= document.styleSheets.length - 1; i++) {
-                if (document.styleSheets[i].href && document.styleSheets[i].href.indexOf('c3_orig.css') !== -1) {
+                if (document.styleSheets[i].href && document.styleSheets[i].href.indexOf('c3.min.css') !== -1) {
                     if (document.styleSheets[i].rules !== undefined) {
                         chartStyle = document.styleSheets[i].rules;
                     } else {

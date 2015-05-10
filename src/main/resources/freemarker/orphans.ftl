@@ -38,11 +38,10 @@
     $(function() {
         var chart = c3.generate({
             bindto: '#chart',
-            /*
             size: {
-                width: 5000,
+                width: 12000,
                 height: 1000
-            },*/
+            },
             data: {
                 x: 'x',
     //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
