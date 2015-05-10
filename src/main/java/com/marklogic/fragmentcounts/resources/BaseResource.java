@@ -1,6 +1,9 @@
 package com.marklogic.fragmentcounts.resources;
 
 
+import com.marklogic.fragmentcounts.beans.Counts;
+import com.marklogic.fragmentcounts.beans.FragmentCountMap;
+import com.marklogic.fragmentcounts.beans.UniqueDateList;
 import com.marklogic.fragmentcounts.util.Consts;
 import com.marklogic.fragmentcounts.util.CsvManager;
 import com.sun.jersey.api.view.Viewable;
@@ -14,7 +17,10 @@ import javax.ws.rs.core.UriInfo;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.text.MessageFormat.format;
@@ -139,6 +145,37 @@ public class BaseResource {
                 .entity(new Viewable(templateName, model)).build();
     }
 
+
+
+    protected Set<String> getUniqueDateList(){
+        if(UniqueDateList.getInstance().isEmpty()){
+            LOG.info("Setting up the unique date list");
+            List<String> allDates = new ArrayList<String>();
+            for (String s : FragmentCountMap.getInstance().keySet()) {
+                List<Counts> l = FragmentCountMap.getInstance().get(s);
+                for (Counts c : l) {
+                    allDates.add(c.getDate());
+                }
+            }
+
+            Collections.sort(allDates, new Comparator<String>() {
+                DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+
+                @Override
+                public int compare(String o1, String o2) {
+                    try {
+                        return f.parse(o1).compareTo(f.parse(o2));
+                    } catch (ParseException e) {
+                        LOG.error("Unparseable date: " + e.getMessage());
+                        //throw new IllegalArgumentException(e);
+                        return -1;
+                    }
+                }
+            });
+            UniqueDateList.getInstance().addAll(allDates);
+        }
+        return UniqueDateList.getInstance();
+    }
 
     protected void analysePath(String path) {
         CsvManager cm = new CsvManager();

@@ -3,6 +3,7 @@ package com.marklogic.fragmentcounts.resources;
 
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
+import com.marklogic.fragmentcounts.beans.UniqueDateList;
 import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
@@ -25,10 +26,10 @@ import java.util.*;
 public class RootResource extends BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RootResource.class);
-    private Set<String> uniqueDates;
+
     private Map<String, Counts> pertainingToDate = new LinkedHashMap<String, Counts>();
-    private Map<String, Map<String, Counts>> allInMap;
-    private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();;
+    private Map<String, Map<String, Counts>> allInMap = new LinkedHashMap<String, Map<String, Counts>>();
+    private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
     /* data model for freemarker .ftl template
     private Map<String, Object> createModel() {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -45,7 +46,7 @@ public class RootResource extends BaseResource {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "Dashboard and Overview");
         map.put("dataSet", FragmentCountMap.getInstance());
-        map.put("allKnownDates", uniqueDates);
+        map.put("allKnownDates", getUniqueDateList());
         map.put("pertainingToDate", pertainingToDate);
         map.put("allInMap", allInMap);
         map.put("accruedTotals", accruedTotalsPerForest);
@@ -63,69 +64,64 @@ public class RootResource extends BaseResource {
     @Produces(MediaType.TEXT_HTML)
     public Viewable getDashboard() {
 
-        LOG.info("getting Dash...")     ;
+        LOG.info("getting Dash...");
+
         if (FragmentCountMap.getInstance().size() == 0) {
+            LOG.info("Fragment Count Map is completely empty - need to reprocess");
             analysePath(Consts.DIRECTORY);
+            doRefreshFriendlyWork();
 
-            List<String> allDates = new ArrayList<String>();
-            for (String s : FragmentCountMap.getInstance().keySet() ){
-                List<Counts> l = FragmentCountMap.getInstance().get(s);
-                for (Counts c : l){
-                    allDates.add(c.getDate());
-                }
-            }
-
-            Collections.sort(allDates, new Comparator<String>() {
-                DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                @Override
-                public int compare(String o1, String o2) {
-                    try {
-                        return f.parse(o1).compareTo(f.parse(o2));
-                    } catch (ParseException e) {
-                        LOG.error("Unparseable date: " + e.getMessage());
-                        //throw new IllegalArgumentException(e);
-                        return -1;
-                    }
-                }
-            });
-            uniqueDates = new LinkedHashSet<String>(allDates);
-
-            allInMap = new LinkedHashMap<String, Map<String, Counts>>();
-
-            for (String date : uniqueDates) {
-                // LOG.info("UNIQUE DATE " + s);
-                pertainingToDate = new LinkedHashMap<String, Counts>();
-                for (String s : FragmentCountMap.getInstance().keySet() ){
-                    List<Counts> l = FragmentCountMap.getInstance().get(s);
-                    for (Counts c : l){
-                        if (date.equals(c.getDate())){
-                            if(pertainingToDate.containsKey(s)){
-                                LOG.info("Key already exists - check this file out "+s);
-                            }
-                            pertainingToDate.put(s, c);
-                        }
-
-                    }
-                }
-                allInMap.put(date, pertainingToDate);
-            }
-
+        }    else {
+            LOG.info("refresh fix - FIX THIS PROPERLY!");
+            doRefreshFriendlyWork();
         }
 
+
+        //stackRecords = identifyCarriedOverStacks(pstacks);
+        // renders the URI using "src/main/resources/freemarker/dashboard.ftl"
+        return new Viewable("/dashboard", createModel("ErrorLog.txt"));
+    }
+
+    // TODO - method is really nasty but pushed for time before call :/
+    public void doRefreshFriendlyWork() {
+
+
+
+        allInMap = new LinkedHashMap<String, Map<String, Counts>>();
+
+        for (String date : UniqueDateList.getInstance()) {
+            // LOG.info("UNIQUE DATE " + s);
+            pertainingToDate = new LinkedHashMap<String, Counts>();
+            for (String s : FragmentCountMap.getInstance().keySet()) {
+                List<Counts> l = FragmentCountMap.getInstance().get(s);
+                for (Counts c : l) {
+                    if (date.equals(c.getDate())) {
+                        if (pertainingToDate.containsKey(s)) {
+                            LOG.info("Key already exists - check this file out " + s);
+                        }
+                        pertainingToDate.put(s, c);
+                    }
+
+                }
+            }
+            allInMap.put(date, pertainingToDate);
+        }
+
+
         /// NExt attempt - get totals as seq
-        for (String s : allInMap.keySet()){
-        // date keys
-            Map<String,Counts> thisDay = allInMap.get(s);
-    // private Map<String, List<String>> accruedTotalsPerForest;
+        for (String s : allInMap.keySet()) {
+            // date keys
+            Map<String, Counts> thisDay = allInMap.get(s);
+            // private Map<String, List<String>> accruedTotalsPerForest;
             for (String t : thisDay.keySet()) {
                 // getTotalFragmentsIngestedByForest()
                 // String total = thisDay.get(t).getTotalFragmentsIngestedInDatabase();
                 String total = thisDay.get(t).getTotalFragmentsIngestedByForest();
-                if (total == null || Integer.parseInt(total) < 1){
+                if (total == null || Integer.parseInt(total) < 1) {
                     total = "0";
                 }
 
-                if(accruedTotalsPerForest.containsKey(t)){
+                if (accruedTotalsPerForest.containsKey(t)) {
                     List<String> totals = accruedTotalsPerForest.get(t);
                     totals.add(total);
                     accruedTotalsPerForest.put(t, totals);
@@ -137,12 +133,9 @@ public class RootResource extends BaseResource {
 
             }
         }
-
-
-        //stackRecords = identifyCarriedOverStacks(pstacks);
-        // renders the URI using "src/main/resources/freemarker/dashboard.ftl"
-        return new Viewable("/dashboard", createModel("ErrorLog.txt"));
     }
+
+
 
     @GET
     @Path("/date/{id}")
@@ -150,12 +143,12 @@ public class RootResource extends BaseResource {
     public Viewable getDetails(@PathParam("id") String id) {
         LOG.debug("Viewing date: " + id);
 
-        for (String s : FragmentCountMap.getInstance().keySet() ){
+        for (String s : FragmentCountMap.getInstance().keySet()) {
             List<Counts> l = FragmentCountMap.getInstance().get(s);
-            for (Counts c : l){
-                if (id.equals(c.getDate())){
-                    if(pertainingToDate.containsKey(s)){
-                        LOG.info("Key already exists - check this file out "+s);
+            for (Counts c : l) {
+                if (id.equals(c.getDate())) {
+                    if (pertainingToDate.containsKey(s)) {
+                        LOG.info("Key already exists - check this file out " + s);
                     }
                     pertainingToDate.put(s, c);
                 }

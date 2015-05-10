@@ -6,7 +6,7 @@
 
         <#if title = "Orphaned Properties Fragments">
         <li class="active"><#else>
-        <li></#if><a href="/Orphans">Orphans</a></li>
+        <li></#if><a href="/orphans">Orphans</a></li>
 
 
 
