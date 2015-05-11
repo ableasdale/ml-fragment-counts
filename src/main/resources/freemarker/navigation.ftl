@@ -16,10 +16,10 @@
             </ul>
         </li>
 
-
+            <!--
         <#if title = "Upload ErrorLog">
-        <li class="active"><#else>
-        <li></#if><a href="/upload">Upload ErrorLog(s)</a></li>
+         li class="active"><#else>
+        <li></#if><a href="/upload">Upload ErrorLog(s)</a></li -->
 
             <!--
 
@@ -57,7 +57,7 @@
         </div>
     </form>
 
-    <div class="btn-group pull-right">
+    <!-- div class="btn-group pull-right">
         <button type="button" class="btn btn-primary navbar-btn">Select ErrorLog</button>
         <button type="button" class="btn btn-primary dropdown-toggle navbar-btn" data-toggle="dropdown" aria-expanded="false">
             <span class="caret"></span>
@@ -71,6 +71,6 @@
             </#list>
         </#if>
         </ul>
-    </div>
+    </div -->
 
 </div>
