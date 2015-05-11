@@ -34,14 +34,14 @@
 
 <script>
     $(function() {
-
         var chart = c3.generate({
             bindto: '#chart3',
             size: {
-                width: 1100,
+                width: 3000,
                 height: 500
             },
             data: {
+                type: 'spline',
                 x: 'x',
                 //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
                 columns: [
@@ -64,10 +64,11 @@
         var chart2 = c3.generate({
             bindto: '#chart2',
             size: {
-                width: 1100,
+                width: 3000,
                 height: 800
             },
             data: {
+                type: 'spline',
                 x: 'x',
                 //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
                 columns: [

@@ -1,6 +1,5 @@
 package com.marklogic.fragmentcounts.resources;
 
-import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
@@ -32,7 +31,6 @@ public class ForestsResource extends BaseResource {
 
     private List<Counts> newForestData;
     private String currentForest;
-    //private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
 
     private Map<String, Object> createModel(String id) {
         Map<String, Object> map = new HashMap<String, Object>();

@@ -60,7 +60,6 @@
                 width: 5000,
                 height: 800
             },
-            type: 'spline',
             axis: {
                 x: {
                     type: 'timeseries',
@@ -70,6 +69,7 @@
                 }
             },
             data: {
+                type: 'spline',
                 x: 'x',
 //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
                 columns: [

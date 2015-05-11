@@ -35,7 +35,6 @@ public class RootResource extends BaseResource {
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("allInMap", AllInfoMap.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
-        //map.put("id", id);
         return map;
     }
 

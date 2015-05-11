@@ -50,10 +50,11 @@
                 height: 800
             },
             data: {
+                type: 'spline',
                 x: 'x',
     //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
                 columns: [
-                    ['x', <#list allKnownDates as date>'${date}',</#list>],
+                    ['x', <#list dateSubset as date>'${date}',</#list>],
 
                 <#assign totes = accruedTotals?keys>
                 <#list totes as k>
