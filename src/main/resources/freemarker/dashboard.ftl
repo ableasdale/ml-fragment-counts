@@ -11,13 +11,26 @@
         <h3>Current file: <small>TODO</small></h3>
     </div>
 
+    <a href="#" class="btn btn-primary btn-default savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download PNG Image</a>
+
     <div class="sixteen columns">
-        <a class="savePNG" href="#">Download PNG</a>
         <div id="chart"></div>
-        <img id='img1'/>
         <canvas id="canvas"></canvas>
     </div>
 
+
+    <!-- add  disabled -->
+
+    <!-- Small modal data-toggle="modal" data-target=".bs-example-modal-sm" -->
+
+
+    <!-- div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                ...
+            </div>
+        </div>
+    </div -->
 
     <p>${allKnownDates?size} dates</p>
     <ul>
@@ -35,10 +48,13 @@
 <script>
 
     $(function() {
+
         $('.savePNG').on('click',function(e){
             e.preventDefault;
             createChartImages();
         });
+
+
 
         var chart = c3.generate({
             bindto: '#chart',
@@ -71,8 +87,10 @@
 
         var styles;
         var createChartImages = function() {
-            // Zoom! Enhance!
-            // $('#chart > svg').attr('transform', 'scale(2)');
+            // TODO - disabling the download button appears to break this.  Figure out whether this can be fixed / improve performance
+            $( "a.savePNG" ).addClass( "disabled" );
+            // Scale up image
+            $('#chart > svg').attr('transform', 'scale(2)');
 
             // Remove all defs, which botch PNG output
             $('defs').remove();
@@ -80,12 +98,14 @@
             inlineAllStyles();
             // Create PNG image
             var canvas = $('#canvas').empty()[0];
-            canvas.width = $('#canvas').width();
-            canvas.height = $('#canvas').height();
+            canvas.width = $('#canvas').width() * 2;
+            canvas.height = $('#canvas').height() * 2;
 
             var canvasContext = canvas.getContext('2d');
             var svg = $.trim($('#chart > svg')[0].outerHTML);
             canvasContext.drawSvg(svg, 0, 0);
+
+            $( "a.savePNG" ).removeClass( "disabled" );
             $(".savePNG").attr("href", canvas.toDataURL("png"))
                     .attr("download", function() {
                         return "image.png";
