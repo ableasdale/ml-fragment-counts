@@ -11,7 +11,7 @@
         <h3>Current file: <small>TODO</small></h3>
     </div>
 
-    <a href="#" class="btn btn-primary btn-default savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download PNG Image</a>
+    <p><a href="#" class="btn btn-primary savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></p>
 
     <div class="sixteen columns">
         <div id="chart"></div>
