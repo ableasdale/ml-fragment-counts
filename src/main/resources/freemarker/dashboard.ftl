@@ -8,7 +8,6 @@
     <div class="sixteen columns">
         <h2>MarkLogic Fragment Counts <small>Dashboard</small></h2>
         <#include "navigation.ftl">
-        <h3>Current file: <small>TODO</small></h3>
     </div>
 
     <p><a href="#" class="btn btn-primary savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></p>
