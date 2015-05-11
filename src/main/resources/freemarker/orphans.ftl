@@ -14,7 +14,7 @@
     <div id="chart_div" class="sixteen columns">
         <div id="chart" style="height:1000px;"></div>
     </div>
-
+<!--
 <#assign elkeys = allInMap?keys>
 <#list elkeys as elkey>
     <p>Allin: ${elkey}</p>
@@ -26,7 +26,7 @@
     </#list>
 
 </#list>
-
+    -->
 
 </div>
 <#include "footer.ftl">
