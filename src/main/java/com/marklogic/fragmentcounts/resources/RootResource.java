@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,9 +29,7 @@ public class RootResource extends BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RootResource.class);
 
-    // TODO - unscramble this later...
     private Map<String, Counts> pertainingToDate;
-
     private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
     /* data model for freemarker .ftl template
     private Map<String, Object> createModel() {
@@ -71,6 +70,7 @@ public class RootResource extends BaseResource {
         if (FragmentCountMap.getInstance().size() == 0) {
             LOG.info("Fragment Count Map is completely empty - need to reprocess");
             analysePath(Consts.DIRECTORY);
+            analysePath(Consts.DIRECTORY_TWO);
             getUniqueDateList();
             getAllInfoMap();
             doRefreshFriendlyWork();
@@ -116,42 +116,23 @@ public class RootResource extends BaseResource {
     }
 
 
-
     @GET
     @Path("/date/{id}")
     @Produces(MediaType.TEXT_HTML)
     public Viewable getDetails(@PathParam("id") String id) {
-        LOG.debug("Viewing date: " + id);
-
+        LOG.debug(MessageFormat.format("Viewing date: {0}", id));
+        pertainingToDate = new LinkedHashMap<String, Counts>();
         for (String s : FragmentCountMap.getInstance().keySet()) {
             List<Counts> l = FragmentCountMap.getInstance().get(s);
             for (Counts c : l) {
                 if (id.equals(c.getDate())) {
                     if (pertainingToDate.containsKey(s)) {
-                        LOG.info("Key already exists - check this file out " + s);
+                        LOG.warn("Key already exists - check this file out " + s);
                     }
                     pertainingToDate.put(s, c);
                 }
-
             }
         }
-
-       /*
-        List<String> allDates = new ArrayList<String>();
-        for (String s : FragmentCountMap.getInstance().keySet() ){
-             List<Counts> l = FragmentCountMap.getInstance().get(s);
-             for (Counts c : l){
-                 allDates.add(c.getDate());
-             }
-        }
-
-        uniqueDates = new HashSet<String>(allDates);
-
-        for (String s : uniqueDates){
-            LOG.info("UNIQUE DATE ", s);
-        }
-        //List<String> = new S */
         return new Viewable("/date", createModel(id));
     }
-
 }

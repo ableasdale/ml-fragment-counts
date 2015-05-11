@@ -5,7 +5,6 @@ import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
-import com.marklogic.fragmentcounts.util.Consts;
 import com.marklogic.fragmentcounts.util.CsvManager;
 import com.sun.jersey.api.view.Viewable;
 import org.apache.commons.io.FileUtils;
@@ -176,7 +175,7 @@ public class BaseResource {
     protected Map<String, Map<String, Counts>> getAllInfoMap() {
 
         if (AllInfoMap.getInstance().isEmpty()) {
-            Map<String,Map<String,Counts>> tempMap = AllInfoMap.getInstance();
+            Map<String, Map<String, Counts>> tempMap = AllInfoMap.getInstance();
             LOG.info("Setting up the All Info Map");
             for (String date : UniqueDateList.getInstance()) {
                 // LOG.info("UNIQUE DATE " + s);
@@ -203,19 +202,19 @@ public class BaseResource {
     protected void analysePath(String path) {
         CsvManager cm = new CsvManager();
 
-        // traverse a directory
-        LOG.info(MessageFormat.format("Traversing Directory: {0}", Consts.DIRECTORY));
+        LOG.info(MessageFormat.format("Traversing Directory: {0}", path));
 
-        File file = new File(Consts.DIRECTORY);
+        File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, null, true);
         for (File file2 : files) {
-            LOG.info(file2.getName());
-            try {
-                cm.processCsvFile(file2);
-            } catch (IOException e) {
-                LOG.error("Exception caught " + e.getMessage());
+            if (file2.getName().endsWith(".txt") || file2.getName().endsWith(".csv")) {
+                LOG.info(MessageFormat.format("Processing file: {0}", file2.getName()));
+                try {
+                    cm.processCsvFile(file2);
+                } catch (IOException e) {
+                    LOG.error(MessageFormat.format("Exception caught: {0}", e.getMessage()));
+                }
             }
-
         }
 
     }

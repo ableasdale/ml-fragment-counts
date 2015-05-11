@@ -22,17 +22,14 @@ public class Counts {
     private String date;
     private String orphanedProperties;
     private String totalFragmentsIngestedByForest;
-
-    public Map<String, List<String>> getTotalFragmentsIngestedByForestOverTime() {
-        return totalFragmentsIngestedByForestOverTime;
-    }
-
-    public void setTotalFragmentsIngestedByForestOverTime(Map<String, List<String>> totalFragmentsIngestedByForestOverTime) {
-        this.totalFragmentsIngestedByForestOverTime = totalFragmentsIngestedByForestOverTime;
-    }
+    private String activeFragments;
+    private String nascentFragments;
+    private String deletedFragments;
 
     private Map<String, List<String>> totalFragmentsIngestedByForestOverTime;
     private String totalFragmentsIngestedInDatabase;
+
+    /* Getters / Setters */
 
     public String getDate() {
         return date;
@@ -58,6 +55,38 @@ public class Counts {
         this.totalFragmentsIngestedByForest = totalFragmentsIngestedByForest;
     }
 
+    public String getActiveFragments() {
+        return activeFragments;
+    }
+
+    public void setActiveFragments(String activeFragments) {
+        this.activeFragments = activeFragments;
+    }
+
+    public String getNascentFragments() {
+        return nascentFragments;
+    }
+
+    public void setNascentFragments(String nascentFragments) {
+        this.nascentFragments = nascentFragments;
+    }
+
+    public String getDeletedFragments() {
+        return deletedFragments;
+    }
+
+    public void setDeletedFragments(String deletedFragments) {
+        this.deletedFragments = deletedFragments;
+    }
+
+    public Map<String, List<String>> getTotalFragmentsIngestedByForestOverTime() {
+        return totalFragmentsIngestedByForestOverTime;
+    }
+
+    public void setTotalFragmentsIngestedByForestOverTime(Map<String, List<String>> totalFragmentsIngestedByForestOverTime) {
+        this.totalFragmentsIngestedByForestOverTime = totalFragmentsIngestedByForestOverTime;
+    }
+
     public String getTotalFragmentsIngestedInDatabase() {
         return totalFragmentsIngestedInDatabase;
     }
@@ -73,9 +102,13 @@ public class Counts {
 
         Counts counts = (Counts) o;
 
+        if (!activeFragments.equals(counts.activeFragments)) return false;
         if (!date.equals(counts.date)) return false;
+        if (!deletedFragments.equals(counts.deletedFragments)) return false;
+        if (!nascentFragments.equals(counts.nascentFragments)) return false;
         if (!orphanedProperties.equals(counts.orphanedProperties)) return false;
         if (!totalFragmentsIngestedByForest.equals(counts.totalFragmentsIngestedByForest)) return false;
+        if (!totalFragmentsIngestedByForestOverTime.equals(counts.totalFragmentsIngestedByForestOverTime)) return false;
         if (!totalFragmentsIngestedInDatabase.equals(counts.totalFragmentsIngestedInDatabase)) return false;
 
         return true;
@@ -86,6 +119,10 @@ public class Counts {
         int result = date.hashCode();
         result = 31 * result + orphanedProperties.hashCode();
         result = 31 * result + totalFragmentsIngestedByForest.hashCode();
+        result = 31 * result + activeFragments.hashCode();
+        result = 31 * result + nascentFragments.hashCode();
+        result = 31 * result + deletedFragments.hashCode();
+        result = 31 * result + totalFragmentsIngestedByForestOverTime.hashCode();
         result = 31 * result + totalFragmentsIngestedInDatabase.hashCode();
         return result;
     }

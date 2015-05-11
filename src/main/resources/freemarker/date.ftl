@@ -22,6 +22,11 @@
         <p>Frags Ingested by forest ${pertainingToDate[elkey].getTotalFragmentsIngestedByForest()}</p>
         <p>Total Frags ${pertainingToDate[elkey].getTotalFragmentsIngestedInDatabase()}</p>
 
+        <p>Active Frags ${pertainingToDate[elkey].getActiveFragments()}</p>
+        <p>Nascent Frags ${pertainingToDate[elkey].getNascentFragments()}</p>
+        <p>Deleted Frags ${pertainingToDate[elkey].getDeletedFragments()}</p>
+
+
 </#list>
 
 </div>

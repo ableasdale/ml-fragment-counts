@@ -85,6 +85,13 @@
             }
         });
 
+        /*
+        setTimeout(function () {
+            chart.load({
+                createChartImages();
+            });
+        }, 1000);*/
+
         var styles;
         var createChartImages = function() {
             // TODO - disabling the download button appears to break this.  Figure out whether this can be fixed / improve performance
