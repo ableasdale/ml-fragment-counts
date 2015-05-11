@@ -38,23 +38,23 @@ public class CsvManager {
             // remove headers
             lines.remove(0);
             // Hack up the filename so the keys match for the two files
-            String keyFromFn =  fn.substring(  (fn.indexOf('-') + 1) , fn.lastIndexOf('.') );
-            if(fileMap.containsKey(keyFromFn)){
+            String keyFromFn = fn.substring((fn.indexOf('-') + 1), fn.lastIndexOf('.'));
+            if (fileMap.containsKey(keyFromFn)) {
 
                 List<Counts> countList = fileMap.get(keyFromFn);
                 Map<String, Counts> counts = new LinkedHashMap<String, Counts>();
                 // Keying our countList by date
-                for (Counts c : countList){
+                for (Counts c : countList) {
                     counts.put(c.getDate(), c);
                 }
 
                 for (String l : lines) {
                     // hack all the string data in the files so it'll map to our objects
-                    l=l.replace(" ", "");
+                    l = l.replace(" ", "");
                     String[] s = l.split(",");
                     String date = s[0].split("T")[0];
                     //LOG.info(s[0].split("T")[0]);
-                    if(counts.containsKey(date)) {
+                    if (counts.containsKey(date)) {
                         // LOG.info("matching date "+ date + " key: "+keyFromFn);
                         Counts c = counts.get(date);
                         c.setActiveFragments(s[1]);
@@ -76,12 +76,12 @@ public class CsvManager {
                 }
                 // Now put these back!
                 List<Counts> newCountList = new ArrayList<Counts>();
-                for (String s : counts.keySet()){
+                for (String s : counts.keySet()) {
                     newCountList.add(counts.get(s));
                 }
                 fileMap.put(keyFromFn, newCountList);
             } else {
-                LOG.error("Something is going wrong - please debug using: "+fn);
+                LOG.error("Something is going wrong - please debug using: " + fn);
             }
 
         } else {

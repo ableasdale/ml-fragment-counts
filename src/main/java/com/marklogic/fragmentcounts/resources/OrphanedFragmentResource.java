@@ -4,7 +4,6 @@ import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
-import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ import java.util.*;
  */
 
 @Path("/orphans")
-public class OrphanedFragmentResource extends BaseResource  {
+public class OrphanedFragmentResource extends BaseResource {
     private static final Logger LOG = LoggerFactory.getLogger(OrphanedFragmentResource.class);
 
     private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();

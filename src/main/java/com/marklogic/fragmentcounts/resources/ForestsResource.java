@@ -14,7 +14,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TODO - Describe
@@ -55,22 +57,22 @@ public class ForestsResource extends BaseResource {
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
     public Viewable getForests(@PathParam("id") String id) {
-        LOG.info("getting Forest data for: "+id);
+        LOG.info("getting Forest data for: " + id);
         currentForest = id;
         List<Counts> forestData = FragmentCountMap.getInstance().get(currentForest);
 
         int startIdx = 0;
-        for(Counts c : forestData){
+        for (Counts c : forestData) {
             // LOG.info(c.getDate());
-            if(c.getDate().equals(Consts.START)){
+            if (c.getDate().equals(Consts.START)) {
                 // get the index and split
                 startIdx = forestData.indexOf(c);
-                LOG.info("Slicing Array at index: " + startIdx + " for start date: "+Consts.START);
+                LOG.info("Slicing Array at index: " + startIdx + " for start date: " + Consts.START);
 
             }
         }
         newForestData = forestData.subList(startIdx, (forestData.size()));
-        LOG.info("Sizes - full dataset: " + forestData.size() + " / Sliced dataset: "+ newForestData.size());
+        LOG.info("Sizes - full dataset: " + forestData.size() + " / Sliced dataset: " + newForestData.size());
 
         /*
         for (String s : AllInfoMap.getInstance().keySet()) {

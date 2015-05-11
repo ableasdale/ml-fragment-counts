@@ -5,17 +5,15 @@ import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
-import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -48,7 +46,6 @@ public class RootResource extends BaseResource {
         map.put("title", "Dashboard and Overview");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
-       // map.put("pertainingToDate", pertainingToDate);
         map.put("allInMap", AllInfoMap.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
         map.put("id", id);
@@ -68,7 +65,6 @@ public class RootResource extends BaseResource {
 
         LOG.info("getting Dash...");
         doRefreshFriendlyWork();
-
 
 
         //stackRecords = identifyCarriedOverStacks(pstacks);

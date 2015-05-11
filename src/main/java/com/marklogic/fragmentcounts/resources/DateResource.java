@@ -4,6 +4,7 @@ import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.sun.jersey.api.view.Viewable;
 
 /**
  * TODO - Describe
@@ -41,7 +40,7 @@ public class DateResource extends BaseResource {
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("pertainingToDate", pertainingToDate);
         map.put("allInMap", AllInfoMap.getInstance());
-      //  map.put("accruedTotals", accruedTotalsPerForest);
+        //  map.put("accruedTotals", accruedTotalsPerForest);
         map.put("id", id);
         //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
         return map;

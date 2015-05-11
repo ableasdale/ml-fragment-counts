@@ -36,20 +36,16 @@ public class BaseResource {
     @Context
     protected UriInfo uriInfo;
 
-    public BaseResource()
-    {
-        LOG.info("Base Constructor :: Init");
+    public BaseResource() {
+        LOG.debug("Base Constructor :: Init");
         if (FragmentCountMap.getInstance().size() == 0) {
-            LOG.info("Fragment Count Map is completely empty - need to reprocess");
+            LOG.debug("Fragment Count Map is completely empty - need to reprocess");
             analysePath(Consts.DIRECTORY);
             analysePath(Consts.DIRECTORY_TWO);
             getUniqueDateList();
             getAllInfoMap();
-           // doRefreshFriendlyWork();
-
         } else {
-            LOG.info("FragmentCountMap is fine - No further work needed");
-            //doRefreshFriendlyWork();
+            LOG.debug("FragmentCountMap is fine - No further work needed");
         }
     }
 

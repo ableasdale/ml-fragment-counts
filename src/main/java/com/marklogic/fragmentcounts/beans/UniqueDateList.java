@@ -1,6 +1,7 @@
 package com.marklogic.fragmentcounts.beans;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * TODO - MAKE THIS ACTUALLY DO SOMETHING!!!
