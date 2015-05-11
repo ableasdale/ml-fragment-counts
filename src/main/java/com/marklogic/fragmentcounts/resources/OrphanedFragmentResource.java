@@ -1,9 +1,6 @@
 package com.marklogic.fragmentcounts.resources;
 
-import com.marklogic.fragmentcounts.beans.AllInfoMap;
-import com.marklogic.fragmentcounts.beans.Counts;
-import com.marklogic.fragmentcounts.beans.FragmentCountMap;
-import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.marklogic.fragmentcounts.beans.*;
 import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
@@ -35,6 +32,7 @@ public class OrphanedFragmentResource extends BaseResource {
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("allInMap", AllInfoMap.getInstance());
+        map.put("hostData", HostList.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
         map.put("dateSubset", dateSubset);
 /*
@@ -62,7 +60,7 @@ public class OrphanedFragmentResource extends BaseResource {
                 LOG.debug("Found start key date for chart: " + s);
             }
             if (!ignoreDateFlag) {
-                LOG.debug("NOT ignoring date "+s);
+                LOG.debug("NOT ignoring date " + s);
                 dateSubset.add(s);
                 // date keys
                 Map<String, Counts> thisDay = AllInfoMap.getInstance().get(s);

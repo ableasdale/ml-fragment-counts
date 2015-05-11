@@ -15,43 +15,43 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * TODO - Describe
  * <p/>
  * User: Alex
  * Date: 11/05/15
- * Time: 12:40
+ * Time: 23:23
  */
-@Path("/forest")
-public class ForestsResource extends BaseResource {
-    private static final Logger LOG = LoggerFactory.getLogger(ForestsResource.class);
+@Path("/host")
+public class HostsResource extends BaseResource {
+    private static final Logger LOG = LoggerFactory.getLogger(HostsResource.class);
 
     private List<Counts> newForestData;
-    private String currentForest;
+    private String currentHost;
 
     private Map<String, Object> createModel(String id) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", "Details by Forest");
+        map.put("title", "Details by Host");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("hostData", HostList.getInstance());
-        map.put("forestData", newForestData);
-        map.put("currentForest", currentForest);
+        map.put("currentHost", currentHost);
         return map;
     }
-
 
     @GET
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
     public Viewable getForests(@PathParam("id") String id) {
+
+
         LOG.debug(MessageFormat.format("Getting Forest data for: {0}", id));
-        currentForest = id;
-        List<Counts> forestData = FragmentCountMap.getInstance().get(currentForest);
+        currentHost = id;
+
+        /* TODO - breaks here
+        List<Counts> forestData = FragmentCountMap.getInstance().get(currentHost);
 
         int startIdx = 0;
         for (Counts c : forestData) {
@@ -64,7 +64,12 @@ public class ForestsResource extends BaseResource {
         }
         newForestData = forestData.subList(startIdx, (forestData.size()));
         LOG.info(MessageFormat.format("Sizes - full dataset: {0} / sliced dataset: {1}", forestData.size(), newForestData.size()));
-
-        return new Viewable("/forest", createModel(id));
+        */
+        return new Viewable("/host", createModel(id));
     }
 }
+
+
+
+
+

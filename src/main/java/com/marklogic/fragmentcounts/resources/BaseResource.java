@@ -1,9 +1,6 @@
 package com.marklogic.fragmentcounts.resources;
 
-import com.marklogic.fragmentcounts.beans.AllInfoMap;
-import com.marklogic.fragmentcounts.beans.Counts;
-import com.marklogic.fragmentcounts.beans.FragmentCountMap;
-import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.marklogic.fragmentcounts.beans.*;
 import com.marklogic.fragmentcounts.util.Consts;
 import com.marklogic.fragmentcounts.util.CsvManager;
 import com.sun.jersey.api.view.Viewable;
@@ -44,6 +41,7 @@ public class BaseResource {
             analysePath(Consts.DIRECTORY_TWO);
             getUniqueDateList();
             getAllInfoMap();
+            generateHostList();
         } else {
             LOG.debug("FragmentCountMap is fine - No further work needed");
         }
@@ -202,6 +200,16 @@ public class BaseResource {
             AllInfoMap.setInstance(tempMap);
         }
         return AllInfoMap.getInstance();
+    }
+
+    protected void generateHostList(){
+        //List<String> hosts = new ArrayList<String>();
+        Set<String> hosts = HostList.getInstance();
+        for(String s : FragmentCountMap.getInstance().keySet()){
+            // LOG.info(s.substring(0,s.lastIndexOf("-")));
+            hosts.add(s.substring(0, s.lastIndexOf("-")));
+        }
+        HostList.setInstance(hosts);
     }
 
     protected void analysePath(String path) {

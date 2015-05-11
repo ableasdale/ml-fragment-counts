@@ -1,9 +1,6 @@
 package com.marklogic.fragmentcounts.resources;
 
-import com.marklogic.fragmentcounts.beans.AllInfoMap;
-import com.marklogic.fragmentcounts.beans.Counts;
-import com.marklogic.fragmentcounts.beans.FragmentCountMap;
-import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.marklogic.fragmentcounts.beans.*;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +35,7 @@ public class DateResource extends BaseResource {
         map.put("title", "Details by Date");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
+        map.put("hostData", HostList.getInstance());
         map.put("pertainingToDate", pertainingToDate);
         map.put("allInMap", AllInfoMap.getInstance());
         //  map.put("accruedTotals", accruedTotalsPerForest);

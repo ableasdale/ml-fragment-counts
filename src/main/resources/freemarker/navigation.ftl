@@ -27,53 +27,12 @@
             </ul>
         </li>
 
-
-
-            <!--
-        <#if title = "Upload ErrorLog">
-         li class="active"><#else>
-        <li></#if><a href="/upload">Upload ErrorLog(s)</a></li -->
-
-            <!--
-
-        <#if title = "Unique Threads">
-        <li class="active"><#else>
-        <li></#if><a href="/unique">Unique Threads</a></li>
-        <#if threadid??>
-            <#if title = "Follow Thread">
-            <li class="active"><#else>
-            <li></#if><a href="/follow/${threadid}">Follow Thread</a></li>
-        </#if>
-        <#if id??>
-            <#if title = "Detail View">
-            <li class="active"><#else>
-            <li></#if><a href="/view/${id}">Detail</a></li>
-            <#if title = "Summary View">
-            <li class="active"><#else>
-            <li></#if><a href="/summary/${id}">Summary</a></li>
-        </#if>
-        <#if searchterm??>
-            <#if title = "Search">
-            <li class="active"><#else>
-            <li></#if><a href="/search/${searchterm}">Search</a></li>
-        </#if> -->
-    </ul>
-
-
-    <!-- div class="btn-group pull-right">
-        <button type="button" class="btn btn-primary navbar-btn">Select ErrorLog</button>
-        <button type="button" class="btn btn-primary dropdown-toggle navbar-btn" data-toggle="dropdown" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-        <#if errorlogs??>
-            <#assign elkeys = errorlogs?keys>
-            <#list elkeys as elkey>
-                <li><a href="/view/${elkey}">${elkey}</a></li>
-            </#list>
-        </#if>
-        </ul>
-    </div -->
+        <#if title = "Details by Host">
+            <li class="dropdown active"><#else><li class="dropdown"></#if>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Host <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+            <#list hostData as h><li><a href="/host/${h}">${h}</a></li></#list>
+            </ul>
+        </li>
 
 </div>
