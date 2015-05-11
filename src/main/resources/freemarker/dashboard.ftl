@@ -5,18 +5,22 @@
 
 <div class="container">
 
-    <div class="sixteen columns">
+    <div class="row">
         <h2>MarkLogic Fragment Counts <small>Dashboard</small></h2>
         <#include "navigation.ftl">
     </div>
 
-    <p><a href="#" class="btn btn-primary savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></p>
-
-    <div class="sixteen columns">
+    <div class="row">
         <div id="chart"></div>
         <canvas id="canvas"></canvas>
     </div>
 
+    <div class="row even-spaced">
+        <div class="col-md-3"><a href="#" class="btn btn-primary savePNG"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
+        <div class="col-md-3"><a href="#" class="btn btn-primary disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> TODO: Download chart as SVG image</a></div>
+    </div>
+
+    <hr class="bottom-spaced"/>
 
     <!-- add  disabled -->
 
@@ -35,7 +39,9 @@
 
 
 </div>
+<div id="container">
 <#include "footer.ftl">
+</div>
 </body>
 </html>
 
@@ -48,13 +54,20 @@
             createChartImages();
         });
 
-
-
         var chart = c3.generate({
             bindto: '#chart',
             size: {
                 width: 5000,
                 height: 800
+            },
+            type: 'spline',
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y-%m-%d'
+                    }
+                }
             },
             data: {
                 x: 'x',
@@ -68,14 +81,6 @@
                 </#list>
 
                 ]
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%Y-%m-%d'
-                    }
-                }
             }
         });
 

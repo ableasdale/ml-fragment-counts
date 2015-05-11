@@ -1,8 +1,13 @@
 <div class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
+
         <#if title = "Dashboard and Overview">
         <li class="active"><#else>
         <li></#if><a href="/">Dashboard</a></li>
+
+        <#if title = "Orphaned Properties Fragments">
+        <li class="active"><#else>
+        <li></#if><a href="/orphans">Orphans</a></li>
 
         <#if title = "Details by Date">
             <li class="dropdown active"><#else><li class="dropdown"></#if>
@@ -14,9 +19,7 @@
             </ul>
         </li>
 
-        <#if title = "Orphaned Properties Fragments">
-        <li class="active"><#else>
-        <li></#if><a href="/orphans">Orphans</a></li>
+
 
         <#if title = "Details by Forest">
         <li class="dropdown active"><#else><li class="dropdown"></#if>
@@ -58,16 +61,6 @@
         </#if> -->
     </ul>
 
-    <form class="navbar-form pull-right" role="search" action="/search" method="post">
-        <div class="input-group">
-            <input type="text" name="term" class="form-control" placeholder="e.g: 'xdmp::BalancedPositionTree::put">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </form>
 
     <!-- div class="btn-group pull-right">
         <button type="button" class="btn btn-primary navbar-btn">Select ErrorLog</button>

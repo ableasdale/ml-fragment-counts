@@ -6,14 +6,21 @@
 <div class="container">
 
     <div class="sixteen columns">
-        <h2>MarkLogic Fragment Counts <small>Dashboard</small></h2>
+        <h2>MarkLogic Fragment Counts <small>Orphaned Fragments</small></h2>
         <#include "navigation.ftl">
-        <h3>Current file: <small>TODO</small></h3>
     </div>
 
     <div id="chart_div" class="sixteen columns">
-        <div id="chart" style="height:1000px;"></div>
+        <div id="chart"></div>
     </div>
+
+    <div class="row even-spaced">
+        <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
+        <div class="col-md-3"><a href="#" class="btn btn-primary disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> TODO: Download chart as SVG image</a></div>
+    </div>
+
+    <hr class="bottom-spaced"/>
+
 <!--
 <#assign elkeys = allInMap?keys>
 <#list elkeys as elkey>
@@ -40,7 +47,7 @@
             bindto: '#chart',
             size: {
                 width: 12000,
-                height: 1000
+                height: 800
             },
             data: {
                 x: 'x',

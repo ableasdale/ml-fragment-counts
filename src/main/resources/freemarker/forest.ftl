@@ -12,13 +12,19 @@
     </div>
 
     <div class="sixteen columns">
-        <div id="chart" style="height:1000px;"></div>
+        <div id="chart3"></div>
     </div>
 
     <div class="sixteen columns">
-        <div id="chart2" style="height:1000px;"></div>
+        <div id="chart2"></div>
     </div>
 
+    <div class="row even-spaced">
+        <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
+        <div class="col-md-3"><a href="#" class="btn btn-primary disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> TODO: Download chart as SVG image</a></div>
+    </div>
+
+    <hr class="bottom-spaced"/>
 
 </div>
 <#include "footer.ftl">
@@ -30,7 +36,7 @@
     $(function() {
 
         var chart = c3.generate({
-            bindto: '#chart',
+            bindto: '#chart3',
             size: {
                 width: 1100,
                 height: 500
@@ -59,7 +65,7 @@
             bindto: '#chart2',
             size: {
                 width: 1100,
-                height: 1000
+                height: 800
             },
             data: {
                 x: 'x',
