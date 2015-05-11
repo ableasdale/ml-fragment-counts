@@ -1,6 +1,6 @@
 #canvas {width:5000px; height:800px; display: none;}
 
-#chart {
+#chart, #chart2 {
     position: relative;
     height: 820px;
     width: 1100px;
