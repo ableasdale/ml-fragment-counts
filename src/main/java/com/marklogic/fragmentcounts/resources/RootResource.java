@@ -67,19 +67,8 @@ public class RootResource extends BaseResource {
     public Viewable getDashboard() {
 
         LOG.info("getting Dash...");
+        doRefreshFriendlyWork();
 
-        if (FragmentCountMap.getInstance().size() == 0) {
-            LOG.info("Fragment Count Map is completely empty - need to reprocess");
-            analysePath(Consts.DIRECTORY);
-            analysePath(Consts.DIRECTORY_TWO);
-            getUniqueDateList();
-            getAllInfoMap();
-            doRefreshFriendlyWork();
-
-        }    else {
-            LOG.info("refresh fix - FIX THIS PROPERLY!");
-            doRefreshFriendlyWork();
-        }
 
 
         //stackRecords = identifyCarriedOverStacks(pstacks);

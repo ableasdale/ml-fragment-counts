@@ -1,10 +1,10 @@
 package com.marklogic.fragmentcounts.resources;
 
-
 import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.marklogic.fragmentcounts.util.Consts;
 import com.marklogic.fragmentcounts.util.CsvManager;
 import com.sun.jersey.api.view.Viewable;
 import org.apache.commons.io.FileUtils;
@@ -25,12 +25,6 @@ import java.util.*;
 
 import static java.text.MessageFormat.format;
 
-//import com.xmlmachines.pstack.beans.SearchResults;
-/*import com.xmlmachines.pstack.beans.PStackFrame;
-import com.xmlmachines.pstack.beans.Thread;
-import com.xmlmachines.pstack.util.Utils;
- */
-
 /**
  * Created with IntelliJ IDEA. User: ableasdale Date: 2/1/14 Time: 6:10 PM
  */
@@ -42,6 +36,22 @@ public class BaseResource {
     @Context
     protected UriInfo uriInfo;
 
+    public BaseResource()
+    {
+        LOG.info("Base Constructor :: Init");
+        if (FragmentCountMap.getInstance().size() == 0) {
+            LOG.info("Fragment Count Map is completely empty - need to reprocess");
+            analysePath(Consts.DIRECTORY);
+            analysePath(Consts.DIRECTORY_TWO);
+            getUniqueDateList();
+            getAllInfoMap();
+           // doRefreshFriendlyWork();
+
+        } else {
+            LOG.info("FragmentCountMap is fine - No further work needed");
+            //doRefreshFriendlyWork();
+        }
+    }
 
 //	public List<PStackFrame> pstacks = PStackMovies.getInstance();
 

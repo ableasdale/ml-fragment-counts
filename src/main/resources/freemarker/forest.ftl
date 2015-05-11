@@ -8,7 +8,7 @@
     <div class="sixteen columns">
         <h2>MarkLogic Fragment Counts <small>Forest view</small></h2>
     <#include "navigation.ftl">
-        <h3>Viewing Forest: <small>${currentForest}</small></h3>
+        <h3>Forest: <small>${currentForest}</small></h3>
     </div>
 
     <div class="sixteen columns">

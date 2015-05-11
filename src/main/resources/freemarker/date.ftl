@@ -8,7 +8,7 @@
     <div class="sixteen columns">
         <h2>MarkLogic Fragment Counts <small>Date view</small></h2>
         <#include "navigation.ftl">
-        <h3>Viewing date: <small>${id}</small></h3>
+        <h3>Date: <small>${id}</small></h3>
     </div>
 
 <#assign elkeys = pertainingToDate?keys>
