@@ -61,7 +61,7 @@ public class ForestsResource extends BaseResource {
 
         int startIdx = 0;
         for(Counts c : forestData){
-            LOG.info(c.getDate());
+            // LOG.info(c.getDate());
             if(c.getDate().equals(Consts.START)){
                 // get the index and split
                 startIdx = forestData.indexOf(c);
@@ -70,7 +70,7 @@ public class ForestsResource extends BaseResource {
             }
         }
         newForestData = forestData.subList(startIdx, (forestData.size()));
-        LOG.info("sizes: " + forestData.size() + " / "+ newForestData.size());
+        LOG.info("Sizes - full dataset: " + forestData.size() + " / Sliced dataset: "+ newForestData.size());
 
         /*
         for (String s : AllInfoMap.getInstance().keySet()) {

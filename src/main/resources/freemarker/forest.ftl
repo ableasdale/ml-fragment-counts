@@ -41,7 +41,6 @@
                 columns: [
                     ['x', <#list forestData as item>'${item.getDate()}',</#list>],
                     ['Nascent Fragments', <#list forestData as item>${item.getNascentFragments()}, </#list>],
-                    ['Deleted Fragments', <#list forestData as item>${item.getDeletedFragments()}, </#list>],
                     ['Orphaned Fragments', <#list forestData as item>${item.getOrphanedProperties()}, </#list>]
 
                 ]
@@ -68,6 +67,7 @@
                 columns: [
                     ['x', <#list forestData as item>'${item.getDate()}',</#list>],
                     ['Active Fragments', <#list forestData as item>${item.getActiveFragments()}, </#list>],
+                    ['Deleted Fragments', <#list forestData as item>${item.getDeletedFragments()}, </#list>],
                     ['Total Fragments / Forest', <#list forestData as item>${item.getTotalFragmentsIngestedByForest()}, </#list>],
                     ['Total Fragments / DB', <#list forestData as item>${item.getTotalFragmentsIngestedInDatabase()}, </#list>]
                 ]
