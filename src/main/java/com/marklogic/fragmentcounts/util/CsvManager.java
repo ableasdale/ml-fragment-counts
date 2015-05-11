@@ -35,7 +35,7 @@ public class CsvManager {
         // is this a monitoring file or the orphaned fragment file?
         if (fn.endsWith(".txt")) {
             //LOG.info("meters file found!");
-            // remove headers
+            // remove CSV headings
             lines.remove(0);
             // Hack up the filename so the keys match for the two files
             String keyFromFn = fn.substring((fn.indexOf('-') + 1), fn.lastIndexOf('.'));
@@ -99,7 +99,7 @@ public class CsvManager {
             }
             fileMap.put(fn.substring(0, fn.lastIndexOf('-')), countsList);
         }
-        LOG.info("Processed file: " + file.getName());
+        LOG.debug("Processed file: " + file.getName());
     }
 
     public String readFile(String path, Charset encoding) throws IOException {

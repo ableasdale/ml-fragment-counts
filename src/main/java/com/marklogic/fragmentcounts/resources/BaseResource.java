@@ -150,7 +150,7 @@ public class BaseResource {
 
     protected Set<String> getUniqueDateList() {
         if (UniqueDateList.getInstance().isEmpty()) {
-            LOG.info("Setting up the unique date list");
+            LOG.debug("Setting up the unique date list");
             List<String> allDates = new ArrayList<String>();
             for (String s : FragmentCountMap.getInstance().keySet()) {
                 List<Counts> l = FragmentCountMap.getInstance().get(s);
@@ -182,7 +182,7 @@ public class BaseResource {
 
         if (AllInfoMap.getInstance().isEmpty()) {
             Map<String, Map<String, Counts>> tempMap = AllInfoMap.getInstance();
-            LOG.info("Setting up the All Info Map");
+            LOG.debug("Setting up the All Info Map");
             for (String date : UniqueDateList.getInstance()) {
                 // LOG.info("UNIQUE DATE " + s);
                 Map<String, Counts> pertainingToDate = new LinkedHashMap<String, Counts>();
@@ -195,7 +195,6 @@ public class BaseResource {
                             }
                             pertainingToDate.put(s, c);
                         }
-
                     }
                 }
                 tempMap.put(date, pertainingToDate);

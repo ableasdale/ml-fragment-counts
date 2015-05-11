@@ -50,7 +50,7 @@ public class OrphanedFragmentResource extends BaseResource {
     @Produces(MediaType.TEXT_HTML)
     public Viewable getOrphans() {
 
-        LOG.info("getting Orphans...");
+        LOG.debug("Getting Orphaned Properties Fragments...");
 
         for (String s : AllInfoMap.getInstance().keySet()) {
             // date keys

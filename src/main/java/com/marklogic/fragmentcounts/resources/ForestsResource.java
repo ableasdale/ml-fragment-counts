@@ -38,17 +38,9 @@ public class ForestsResource extends BaseResource {
         map.put("title", "Details by Forest");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
-        map.put("allInMap", AllInfoMap.getInstance());
 
         map.put("forestData", newForestData);
         map.put("currentForest", currentForest);
-/*
-        map.put("allKnownDates", uniqueDates);
-        map.put("pertainingToDate", pertainingToDate);
-        map.put("allInMap", allInMap);
-        map.put("accruedTotals", accruedTotalsPerForest);
-*/
-        //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
         return map;
     }
 
@@ -74,34 +66,6 @@ public class ForestsResource extends BaseResource {
         newForestData = forestData.subList(startIdx, (forestData.size()));
         LOG.info("Sizes - full dataset: " + forestData.size() + " / Sliced dataset: " + newForestData.size());
 
-        /*
-        for (String s : AllInfoMap.getInstance().keySet()) {
-            // date keys
-            Map<String, Counts> thisDay = AllInfoMap.getInstance().get(s);
-            // private Map<String, List<String>> accruedTotalsPerForest;
-            for (String t : thisDay.keySet()) {
-                // getTotalFragmentsIngestedByForest()
-                // String total = thisDay.get(t).getTotalFragmentsIngestedInDatabase();
-                String total = thisDay.get(t).getOrphanedProperties();
-                if (total == null || Integer.parseInt(total) < 1) {
-                    total = "0";
-                }
-
-                if (accruedTotalsPerForest.containsKey(t)) {
-                    List<String> totals = accruedTotalsPerForest.get(t);
-                    totals.add(total);
-                    accruedTotalsPerForest.put(t, totals);
-                } else {
-                    List<String> totals = new ArrayList<String>();
-                    totals.add(total);
-                    accruedTotalsPerForest.put(t, totals);
-                }
-
-            }
-        }    */
-
-        //stackRecords = identifyCarriedOverStacks(pstacks);
-        // renders the URI using "src/main/resources/freemarker/dashboard.ftl"
         return new Viewable("/forest", createModel(id));
     }
 }

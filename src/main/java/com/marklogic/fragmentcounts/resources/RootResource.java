@@ -1,6 +1,5 @@
 package com.marklogic.fragmentcounts.resources;
 
-
 import com.marklogic.fragmentcounts.beans.AllInfoMap;
 import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
@@ -26,19 +25,7 @@ import java.util.*;
 public class RootResource extends BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RootResource.class);
-
-
     private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
-    /* data model for freemarker .ftl template
-    private Map<String, Object> createModel() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", "Dashboard and Overview");
-        map.put("errorlog", ErrorLogMap.getInstance().get("ErrorLog.txt"));
-        //  map.put("path", PropertiesMap.getInstance().get("path"));
-        map.put("errorlogs", ErrorLogMap.getInstance());
-        //  map.put("stacksCarried", stackRecords);
-        return map;
-    } */
 
     // data model for freemarker .ftl template
     private Map<String, Object> createModel(String id) {
@@ -48,8 +35,7 @@ public class RootResource extends BaseResource {
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("allInMap", AllInfoMap.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
-        map.put("id", id);
-        //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
+        //map.put("id", id);
         return map;
     }
 
@@ -62,31 +48,21 @@ public class RootResource extends BaseResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Viewable getDashboard() {
+        LOG.debug("Getting Dashboard ...");
+        calculateDashboardTotals();
 
-        LOG.info("getting Dash...");
-        doRefreshFriendlyWork();
-
-
-        //stackRecords = identifyCarriedOverStacks(pstacks);
-        // renders the URI using "src/main/resources/freemarker/dashboard.ftl"
-        return new Viewable("/dashboard", createModel("ErrorLog.txt"));
+        return new Viewable("/dashboard", createModel("Dashboard"));
     }
 
-    // TODO - method is really nasty but pushed for time before call :/
-    public void doRefreshFriendlyWork() {
-        /// NExt attempt - get totals as seq
+    public void calculateDashboardTotals() {
         for (String s : AllInfoMap.getInstance().keySet()) {
             // date keys
             Map<String, Counts> thisDay = AllInfoMap.getInstance().get(s);
-            // private Map<String, List<String>> accruedTotalsPerForest;
             for (String t : thisDay.keySet()) {
-                // getTotalFragmentsIngestedByForest()
-                // String total = thisDay.get(t).getTotalFragmentsIngestedInDatabase();
                 String total = thisDay.get(t).getTotalFragmentsIngestedByForest();
                 if (total == null || Integer.parseInt(total) < 1) {
                     total = "0";
                 }
-
                 if (accruedTotalsPerForest.containsKey(t)) {
                     List<String> totals = accruedTotalsPerForest.get(t);
                     totals.add(total);
@@ -96,9 +72,7 @@ public class RootResource extends BaseResource {
                     totals.add(total);
                     accruedTotalsPerForest.put(t, totals);
                 }
-
             }
         }
     }
-
 }
