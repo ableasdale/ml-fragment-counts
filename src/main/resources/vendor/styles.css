@@ -1,11 +1,39 @@
 #canvas {width:5000px; height:800px; display: none;}
 
 #chart, #chart2 {
+    padding-bottom:2em;
     position: relative;
-    height: 820px;
+    /*height: 820px; */
     width: 1100px;
     overflow-x:scroll;
     overflow-y:hidden;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 350px;
+    overflow-x: hidden;
+}
+
+.red {color:brown;}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
 }
 
 /*
@@ -17,3 +45,19 @@ body{
         overflow-y:scroll;
     }
 } */
+/*
+@media screen {
+.columns{
+  height:300px;
+  overflow:scroll;
+}
+}
+
+@media screen and (min-width: 992px){
+.columns{
+  -moz-column-count:5;
+  -webkit-column-count:5;
+  column-count:5;
+  width:600px;
+}
+*/

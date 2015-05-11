@@ -29,7 +29,7 @@ public class RootResource extends BaseResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RootResource.class);
 
-    private Map<String, Counts> pertainingToDate;
+
     private Map<String, List<String>> accruedTotalsPerForest = new LinkedHashMap<String, List<String>>();
     /* data model for freemarker .ftl template
     private Map<String, Object> createModel() {
@@ -48,9 +48,10 @@ public class RootResource extends BaseResource {
         map.put("title", "Dashboard and Overview");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
-        map.put("pertainingToDate", pertainingToDate);
+       // map.put("pertainingToDate", pertainingToDate);
         map.put("allInMap", AllInfoMap.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
+        map.put("id", id);
         //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
         return map;
     }
@@ -115,24 +116,4 @@ public class RootResource extends BaseResource {
         }
     }
 
-
-    @GET
-    @Path("/date/{id}")
-    @Produces(MediaType.TEXT_HTML)
-    public Viewable getDetails(@PathParam("id") String id) {
-        LOG.debug(MessageFormat.format("Viewing date: {0}", id));
-        pertainingToDate = new LinkedHashMap<String, Counts>();
-        for (String s : FragmentCountMap.getInstance().keySet()) {
-            List<Counts> l = FragmentCountMap.getInstance().get(s);
-            for (Counts c : l) {
-                if (id.equals(c.getDate())) {
-                    if (pertainingToDate.containsKey(s)) {
-                        LOG.warn("Key already exists - check this file out " + s);
-                    }
-                    pertainingToDate.put(s, c);
-                }
-            }
-        }
-        return new Viewable("/date", createModel(id));
-    }
 }

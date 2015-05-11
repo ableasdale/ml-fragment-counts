@@ -4,6 +4,16 @@
         <li class="active"><#else>
         <li></#if><a href="/">Dashboard</a></li>
 
+        <#if title = "Details by Date">
+            <li class="dropdown active"><#else><li class="dropdown"></#if>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Date (${allKnownDates?size})<span class="caret"></span></a>
+            <ul class="dropdown-menu scrollable-menu">
+            <#list allKnownDates as date>
+                <li><a href="/date/${date}">${date}</a></li>
+            </#list>
+            </ul>
+        </li>
+
         <#if title = "Orphaned Properties Fragments">
         <li class="active"><#else>
         <li></#if><a href="/orphans">Orphans</a></li>
@@ -15,6 +25,8 @@
             <#list dataSet?keys as key><li><a href="/forest/${key}">${key}</a></li></#list>
             </ul>
         </li>
+
+
 
             <!--
         <#if title = "Upload ErrorLog">

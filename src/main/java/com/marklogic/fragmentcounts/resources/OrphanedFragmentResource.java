@@ -31,7 +31,7 @@ public class OrphanedFragmentResource extends BaseResource  {
 
     private Map<String, Object> createModel(String id) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", "Orphaned Fragments");
+        map.put("title", "Orphaned Properties Fragments");
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("allInMap", AllInfoMap.getInstance());

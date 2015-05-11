@@ -32,12 +32,7 @@
         </div>
     </div -->
 
-    <p>${allKnownDates?size} dates</p>
-    <ul>
-    <#list allKnownDates as date>
-        <li><a href="/date/${date}">${date}</a></li>
-    </#list>
-    </ul>
+
 
 
 </div>

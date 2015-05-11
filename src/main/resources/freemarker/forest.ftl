@@ -32,8 +32,8 @@
         var chart = c3.generate({
             bindto: '#chart',
             size: {
-                width: 12000,
-                height: 1000
+                width: 1100,
+                height: 500
             },
             data: {
                 x: 'x',
@@ -58,7 +58,7 @@
         var chart2 = c3.generate({
             bindto: '#chart2',
             size: {
-                width: 12000,
+                width: 1100,
                 height: 1000
             },
             data: {
