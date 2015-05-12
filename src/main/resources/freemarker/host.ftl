@@ -13,12 +13,11 @@
 
     <#list hostForestList?keys as key>
         <#assign items = hostForestList[key]>
-        <h3>${key}</h3>
+        <h4>Forest: <small>${key}</small></h4>
         <div class="row">
-            <div id="chart${key_index}" class="chart"></div>
+            <div id="hostchart${key_index}" class="chart"></div>
         </div>
     </#list>
-
 
     <div class="row even-spaced">
         <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
@@ -32,13 +31,12 @@
 </body>
 </html>
 
-
 <script>
     $(function() {
     <#list hostForestList?keys as key>
         <#assign items = hostForestList[key]>
             var chart${key_index} = c3.generate({
-                bindto: '#chart${key_index}',
+                bindto: '#hostchart${key_index}',
                 size: { width: 1100, height: 500 },
                 data: {
                     type: 'spline',
@@ -46,6 +44,7 @@
                     columns: [
                         ['x', <#list items as item>'${item.getDate()}',</#list>],
                         ['Nascent Fragments', <#list items as item>${item.getNascentFragments()}, </#list>],
+                        ['Deleted Fragments', <#list items as item>${item.getDeletedFragments()}, </#list>],
                         ['Orphaned Fragments', <#list items as item>${item.getOrphanedProperties()}, </#list>]
                     ]
                 },
