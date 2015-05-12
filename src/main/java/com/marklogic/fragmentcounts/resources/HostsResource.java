@@ -4,6 +4,7 @@ import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.HostList;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
+import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,34 +45,23 @@ public class HostsResource extends BaseResource {
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
     public Viewable getForests(@PathParam("id") String id) {
-
         LOG.debug(MessageFormat.format("Getting Forest data for: {0}", id));
-//        currentHost = id;
         hostForestList = new LinkedHashMap<String, List<Counts>>();
-
             for (String f : FragmentCountMap.getInstance().keySet()){
                 if(f.contains(id)){
-                    LOG.info(MessageFormat.format("Found forest: {0} assigned to host: {1}", f, id));
-                    hostForestList.put(f, FragmentCountMap.getInstance().get(f));
+                    LOG.debug(MessageFormat.format("Found forest: {0} assigned to host: {1}", f, id));
+                    // TODO - can probably be made more efficient?
+                    int startIdx = 0;
+                    List<Counts> fc = FragmentCountMap.getInstance().get(f);
+                    for (Counts c : fc) {
+                        if (c.getDate().equals(Consts.START)) {
+                            startIdx = fc.indexOf(c);
+                            LOG.debug(MessageFormat.format("HostsResource :: getForests :: Slicing Array at index: {0} for start date: {1}", startIdx, Consts.START));
+                        }
+                    }
+                        hostForestList.put(f, fc.subList(startIdx, (fc.size())));
                 }
-
             }
-
-        /* TODO - breaks here
-        List<Counts> forestData = FragmentCountMap.getInstance().get(currentHost);
-
-        int startIdx = 0;
-        for (Counts c : forestData) {
-            // LOG.info(c.getDate());
-            if (c.getDate().equals(Consts.START)) {
-                // get the index and split
-                startIdx = forestData.indexOf(c);
-                LOG.info(MessageFormat.format("Slicing Array at index: {0} for start date: {1}", startIdx, Consts.START));
-            }
-        }
-        newForestData = forestData.subList(startIdx, (forestData.size()));
-        LOG.info(MessageFormat.format("Sizes - full dataset: {0} / sliced dataset: {1}", forestData.size(), newForestData.size()));
-        */
         return new Viewable("/host", createModel(id));
     }
 }
