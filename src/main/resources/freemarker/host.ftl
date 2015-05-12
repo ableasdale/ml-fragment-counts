@@ -58,6 +58,7 @@
                     x: 'x',
                     columns: [
                         ['x', <#list items as item>'${item.getDate()}',</#list>],
+                        ['Total Fragments / Forest', <#list items as item>${item.getTotalFragmentsIngestedByForest()}, </#list>],
                         ['Nascent Fragments', <#list items as item>${item.getNascentFragments()}, </#list>],
                         ['Deleted Fragments', <#list items as item>${item.getDeletedFragments()}, </#list>],
                         ['Orphaned Fragments', <#list items as item>${item.getOrphanedProperties()}, </#list>]

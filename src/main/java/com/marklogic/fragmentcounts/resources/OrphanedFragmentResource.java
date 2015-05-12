@@ -35,13 +35,7 @@ public class OrphanedFragmentResource extends BaseResource {
         map.put("hostData", HostList.getInstance());
         map.put("accruedTotals", accruedTotalsPerForest);
         map.put("dateSubset", dateSubset);
-/*
-        map.put("allKnownDates", uniqueDates);
-        map.put("pertainingToDate", pertainingToDate);
-        map.put("allInMap", allInMap);
-        map.put("accruedTotals", accruedTotalsPerForest);
-*/
-        //map.put("lines", Consts.MAX_LINES_FOR_LOG_PREVIEW);
+
         return map;
     }
 
@@ -50,7 +44,6 @@ public class OrphanedFragmentResource extends BaseResource {
     public Viewable getOrphans() {
 
         LOG.debug("Getting Orphaned Properties Fragments...");
-
 
         boolean ignoreDateFlag = true;
         for (String s : AllInfoMap.getInstance().keySet()) {
