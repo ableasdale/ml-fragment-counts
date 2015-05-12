@@ -13,17 +13,20 @@
 
     <#list hostForestList?keys as key>
         <#assign items = hostForestList[key]>
-        <h4>Forest: <small>${key}</small></h4>
-        <div class="row">
-            <div id="hostchart${key_index}" class="chart"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Forest:</strong> <small>${key}</small>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+            </div>
+            <div class="panel-body">
+                <div id="hostchart${key_index}" class="chart"></div>
+                <div class="row">
+                    <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
+                    <div class="col-md-3"><a href="#" class="btn btn-primary disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> TODO: Download chart as SVG image</a></div>
+                </div>
+            </div>
         </div>
     </#list>
-
-    <div class="row even-spaced">
-        <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
-        <div class="col-md-3"><a href="#" class="btn btn-primary disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> TODO: Download chart as SVG image</a></div>
-    </div>
-
     <hr class="bottom-spaced"/>
 
 </div>
@@ -33,6 +36,18 @@
 
 <script>
     $(function() {
+    $(document).on('click', '.panel-heading span.clickable', function(e){
+        var $this = $(this);
+        if(!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        }
+    });
     <#list hostForestList?keys as key>
         <#assign items = hostForestList[key]>
             var chart${key_index} = c3.generate({
