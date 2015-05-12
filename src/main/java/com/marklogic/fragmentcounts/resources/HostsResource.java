@@ -4,7 +4,6 @@ import com.marklogic.fragmentcounts.beans.Counts;
 import com.marklogic.fragmentcounts.beans.FragmentCountMap;
 import com.marklogic.fragmentcounts.beans.HostList;
 import com.marklogic.fragmentcounts.beans.UniqueDateList;
-import com.marklogic.fragmentcounts.util.Consts;
 import com.sun.jersey.api.view.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +25,9 @@ import java.util.*;
  */
 @Path("/host")
 public class HostsResource extends BaseResource {
-    private static final Logger LOG = LoggerFactory.getLogger(HostsResource.class);
 
-    private List<Counts> newForestData;
-    private String currentHost;
+    private static final Logger LOG = LoggerFactory.getLogger(HostsResource.class);
+    private Map<String, List<Counts>> hostForestList;
 
     private Map<String, Object> createModel(String id) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -37,7 +35,8 @@ public class HostsResource extends BaseResource {
         map.put("dataSet", FragmentCountMap.getInstance());
         map.put("allKnownDates", UniqueDateList.getInstance());
         map.put("hostData", HostList.getInstance());
-        map.put("currentHost", currentHost);
+        map.put("hostForestList", hostForestList);
+        map.put("currentHost", id);
         return map;
     }
 
@@ -46,9 +45,17 @@ public class HostsResource extends BaseResource {
     @Produces(MediaType.TEXT_HTML)
     public Viewable getForests(@PathParam("id") String id) {
 
-
         LOG.debug(MessageFormat.format("Getting Forest data for: {0}", id));
-        currentHost = id;
+//        currentHost = id;
+        hostForestList = new LinkedHashMap<String, List<Counts>>();
+
+            for (String f : FragmentCountMap.getInstance().keySet()){
+                if(f.contains(id)){
+                    LOG.info(MessageFormat.format("Found forest: {0} assigned to host: {1}", f, id));
+                    hostForestList.put(f, FragmentCountMap.getInstance().get(f));
+                }
+
+            }
 
         /* TODO - breaks here
         List<Counts> forestData = FragmentCountMap.getInstance().get(currentHost);

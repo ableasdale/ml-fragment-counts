@@ -11,13 +11,14 @@
         <h3>Host: <small>${currentHost}</small></h3>
     </div>
 
-    <div class="sixteen columns">
-        <div id="chart3"></div>
-    </div>
+    <#list hostForestList?keys as key>
+        <#assign items = hostForestList[key]>
+        <h3>${key}</h3>
+        <div class="row">
+            <div id="chart${key_index}" class="chart"></div>
+        </div>
+    </#list>
 
-    <div class="sixteen columns">
-        <div id="chart2"></div>
-    </div>
 
     <div class="row even-spaced">
         <div class="col-md-3"><a href="#" class="btn btn-primary savePNG disabled"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download chart as PNG image</a></div>
@@ -34,59 +35,27 @@
 
 <script>
     $(function() {
-        var chart = c3.generate({
-            bindto: '#chart3',
-            size: {
-                width: 3000,
-                height: 500
-            },
-            data: {
-                type: 'spline',
-                x: 'x',
-                //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-                columns: [
-                    ['x', <#list forestData as item>'${item.getDate()}',</#list>],
-                    ['Nascent Fragments', <#list forestData as item>${item.getNascentFragments()}, </#list>],
-                    ['Orphaned Fragments', <#list forestData as item>${item.getOrphanedProperties()}, </#list>]
-
-                ]
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%Y-%m-%d'
+    <#list hostForestList?keys as key>
+        <#assign items = hostForestList[key]>
+            var chart${key_index} = c3.generate({
+                bindto: '#chart${key_index}',
+                size: { width: 1100, height: 500 },
+                data: {
+                    type: 'spline',
+                    x: 'x',
+                    columns: [
+                        ['x', <#list items as item>'${item.getDate()}',</#list>],
+                        ['Nascent Fragments', <#list items as item>${item.getNascentFragments()}, </#list>],
+                        ['Orphaned Fragments', <#list items as item>${item.getOrphanedProperties()}, </#list>]
+                    ]
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: { format: '%Y-%m-%d'}
                     }
                 }
-            }
-        });
-
-        var chart2 = c3.generate({
-            bindto: '#chart2',
-            size: {
-                width: 3000,
-                height: 800
-            },
-            data: {
-                type: 'spline',
-                x: 'x',
-                //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-                columns: [
-                    ['x', <#list forestData as item>'${item.getDate()}',</#list>],
-                    ['Active Fragments', <#list forestData as item>${item.getActiveFragments()}, </#list>],
-                    ['Deleted Fragments', <#list forestData as item>${item.getDeletedFragments()}, </#list>],
-                    ['Total Fragments / Forest', <#list forestData as item>${item.getTotalFragmentsIngestedByForest()}, </#list>],
-                    ['Total Fragments / DB', <#list forestData as item>${item.getTotalFragmentsIngestedInDatabase()}, </#list>]
-                ]
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%Y-%m-%d'
-                    }
-                }
-            }
-        });
+            });
+    </#list>
     });
 </script>
